@@ -42,6 +42,7 @@ $ kubectl create namespace bees
 # rancher
 
 ```shell
+$ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ helm install rancher rancher-stable/rancher \
   --namespace bees \
   --set hostname=rancher.dev.run \
