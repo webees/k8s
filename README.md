@@ -11,13 +11,6 @@ $ k3s kubectl get nodes
 $ k3s kubectl get pods --all-namespaces
 ```
 
-- BUG
-```
-$ kubectl get pods -n kube-system | grep -v Running
-$ kubectl describe pod metrics-server-7566d596c8-krsf4 -n kube-system
-$ kubectl logs metrics-server-7566d596c8-krsf4 -n kube-system
-```
-
 # kubectl
 
 ```shell
@@ -32,6 +25,14 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 $ yum install -y kubectl
 $ kubectl version --client
+```
+
+- BUG
+```
+$ kubectl get pods -n kube-system | grep -v Running
+$ kubectl describe pod metrics-server-7566d596c8-krsf4 -n kube-system
+$ kubectl logs metrics-server-7566d596c8-krsf4 -n kube-system
+$ kubectl delete pod metrics-server-7566d596c8-krsf4 -n kube-system
 ```
 
 # helm3
