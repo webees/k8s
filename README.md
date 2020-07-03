@@ -48,4 +48,6 @@ $ helm install rancher rancher-stable/rancher \
   --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret \
   --set privateCA=true
+$ kubectl -n bees rollout status deploy/rancher
+$ kubectl -n bees get deploy rancher
 ```
