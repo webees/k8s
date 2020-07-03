@@ -73,8 +73,11 @@ $ kubectl get namespace "bees" -o json \
 # FIX
 
 ```
+$ swapoff -a
 $ env | grep -i kub
+$ systemctl status firewalld.service
 $ systemctl status docker.service
 $ systemctl status kubelet
+$ netstat -pnlt | grep 6443
 ```
 
