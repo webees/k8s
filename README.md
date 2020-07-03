@@ -45,6 +45,6 @@ $ kubectl create namespace bees
 $ helm install rancher rancher-stable/rancher \
   --namespace bees \
   --set hostname=rancher.dev.run \
-  --set ingress.tls.source=secret
+  --set ingress.tls.source=secret \
   --set privateCA=true
 ```
