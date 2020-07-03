@@ -1,17 +1,3 @@
-# k3S
-
-```shell
-$ curl -sfL https://get.k3s.io | sh -s - server \
-  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
-
-$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
-  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
-  
-$ k3s kubectl get nodes
-$ kubectl get pods -A
-$ kubectl get svc -A
-```
-
 # kubectl
 
 ```shell
@@ -26,6 +12,7 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 $ yum install -y kubectl
 $ kubectl version --client
+$ kubectl cluster-info
 ```
 
 - BUG
@@ -34,6 +21,20 @@ $ kubectl get pods -n kube-system | grep -v Running
 $ kubectl describe pod -n kube-system metrics-server-7566d596c8-krsf4
 $ kubectl logs -n kube-system metrics-server-7566d596c8-krsf4
 $ kubectl delete pod -n kube-system metrics-server-7566d596c8-krsf4
+```
+
+# k3S
+
+```shell
+$ curl -sfL https://get.k3s.io | sh -s - server \
+  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
+
+$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
+  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
+  
+$ kubectl get nodes
+$ kubectl get pods -A
+$ kubectl get svc -A
 ```
 
 # helm3
