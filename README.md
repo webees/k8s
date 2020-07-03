@@ -11,16 +11,8 @@ repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 $ yum install -y kubectl
-$ kubectl version --client
+$ kubectl version
 $ kubectl cluster-info
-```
-
-- BUG
-```
-$ kubectl get pods -n kube-system | grep -v Running
-$ kubectl describe pod -n kube-system metrics-server-7566d596c8-krsf4
-$ kubectl logs -n kube-system metrics-server-7566d596c8-krsf4
-$ kubectl delete pod -n kube-system metrics-server-7566d596c8-krsf4
 ```
 
 # k3S
@@ -32,9 +24,9 @@ $ curl -sfL https://get.k3s.io | sh -s - server \
 $ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
   --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
   
-$ kubectl get nodes
-$ kubectl get pods -A
-$ kubectl get svc -A
+$ k3s kubectl get nodes
+$ k3s kubectl get pods -A
+$ k3s kubectl get svc -A
 ```
 
 # helm3
@@ -46,22 +38,14 @@ $ ./get_helm.sh
 $ helm version
 $ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 $ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
-$ kubectl create namespace bees
-$ kubectl -n bees create secret generic tls-ca --from-file=cacerts.pem
-```
-
-- BUG
-```
-$ kubectl delete namespace bees
-$ kubectl get namespace "bees" -o json \
-            | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
-            | kubectl replace --raw /api/v1/namespaces/bees/finalize -f -
 ```
 
 # rancher
 
 ```shell
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+$ kubectl create namespace bees
+$ kubectl -n bees create secret generic tls-ca --from-file=cacerts.pem
 $ helm install rancher rancher-stable/rancher \
   --namespace bees \
   --set replicas=1 \
@@ -73,3 +57,24 @@ $ helm ls --namespace bees
 $ kubectl -n bees rollout status deploy/rancher
 $ kubectl -n bees get deploy rancher
 ```
+
+- BUG
+```
+$ kubectl get pods -n kube-system | grep -v Running
+$ kubectl describe pod -n kube-system metrics-server-7566d596c8-krsf4
+$ kubectl logs -n kube-system metrics-server-7566d596c8-krsf4
+$ kubectl delete pod -n kube-system metrics-server-7566d596c8-krsf4
+$ kubectl delete namespace bees
+$ kubectl get namespace "bees" -o json \
+            | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
+            | kubectl replace --raw /api/v1/namespaces/bees/finalize -f -
+```
+
+# FIX
+
+```
+$ env | grep -i kub
+$ systemctl status docker.service
+$ systemctl status kubelet
+```
+
