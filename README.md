@@ -46,6 +46,7 @@ $ helm version
 $ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 $ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 $ kubectl create namespace bees
+$ kubectl -n bees create secret generic tls-ca --from-file=cacerts.pem
 ```
 
 - BUG
@@ -65,6 +66,7 @@ $ helm install rancher rancher-stable/rancher \
   --set replicas=1 \
   --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret \
+  --set tls=external \
   --set privateCA=true
 $ helm ls --namespace bees
 $ kubectl -n bees rollout status deploy/rancher
