@@ -42,8 +42,8 @@ $ kubectl create namespace bees
 # rancher
 
 ```shell
-$ helm install rancher rancher-<CHART_REPO>/rancher \
-  --namespace cattle-system \
-  --set hostname=rancher.my.org \
+$ helm install rancher rancher-stable/rancher \
+  --namespace bees \
+  --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret
 ```
