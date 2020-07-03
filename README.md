@@ -34,4 +34,16 @@ $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/s
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 $ helm version
+$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
+$ kubectl create namespace bees
+```
+
+# rancher
+
+```shell
+$ helm install rancher rancher-<CHART_REPO>/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.my.org \
+  --set ingress.tls.source=secret
 ```
