@@ -41,7 +41,7 @@ $ kubectl create namespace bees
 
 - BUG
 ```
-# kubectl delete namespace  bees
+$ kubectl delete namespace  bees
 $ kubectl get namespace "bees" -o json \
             | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
             | kubectl replace --raw /api/v1/namespaces/bees/finalize -f -
