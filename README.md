@@ -8,7 +8,8 @@ $ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn s
   --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
   
 $ k3s kubectl get nodes
-$ k3s kubectl get pods --all-namespaces
+$ kubectl get pods -A
+$ kubectl get svc -A
 ```
 
 # kubectl
@@ -30,9 +31,9 @@ $ kubectl version --client
 - BUG
 ```
 $ kubectl get pods -n kube-system | grep -v Running
-$ kubectl describe pod metrics-server-7566d596c8-krsf4 -n kube-system
-$ kubectl logs metrics-server-7566d596c8-krsf4 -n kube-system
-$ kubectl delete pod metrics-server-7566d596c8-krsf4 -n kube-system
+$ kubectl describe pod -n kube-system metrics-server-7566d596c8-krsf4
+$ kubectl logs -n kube-system metrics-server-7566d596c8-krsf4
+$ kubectl delete pod -n kube-system metrics-server-7566d596c8-krsf4
 ```
 
 # helm3
@@ -49,7 +50,7 @@ $ kubectl create namespace bees
 
 - BUG
 ```
-$ kubectl delete namespace  bees
+$ kubectl delete namespace bees
 $ kubectl get namespace "bees" -o json \
             | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
             | kubectl replace --raw /api/v1/namespaces/bees/finalize -f -
