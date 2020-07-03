@@ -39,15 +39,25 @@ $ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com
 $ kubectl create namespace bees
 ```
 
+- BUG
+```
+# kubectl delete namespace  bees
+$ kubectl get namespace "bees" -o json \
+            | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/" \
+            | kubectl replace --raw /api/v1/namespaces/bees/finalize -f -
+```
+
 # rancher
 
 ```shell
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ helm install rancher rancher-stable/rancher \
   --namespace bees \
+  --set replicas=1 \
   --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret \
   --set privateCA=true
+$ helm ls --namespace bees
 $ kubectl -n bees rollout status deploy/rancher
 $ kubectl -n bees get deploy rancher
 ```
