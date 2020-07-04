@@ -3,7 +3,8 @@
 ```shell
 $ curl -sfL https://get.k3s.io | sh -s - server \
   --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database-name"
-  
+
+$ systemctl status k3s
 $ k3s kubectl get nodes
 $ k3s kubectl get pods -A
 $ k3s kubectl get svc -A
