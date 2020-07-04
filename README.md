@@ -1,4 +1,4 @@
-# k3S
+# k3s
 
 ```shell
 $ curl -sfL https://get.k3s.io | sh -s - server \
@@ -9,7 +9,7 @@ $ k3s kubectl get pods -A
 $ k3s kubectl get svc -A
 ```
 
-# kubectl
+# [SKIP]kubectl
 
 ```shell
 $ cat <<EOF > /etc/yum.repos.d/kubernetes.repo
