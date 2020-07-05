@@ -8,6 +8,14 @@ $ k3s kubectl get nodes
 $ k3s kubectl get pods -A
 $ k3s kubectl get svc -A
 $ crictl ps
+$ cd /var/lib/rancher/k3s/agent/etc/containerd
+$ cp config.toml config.toml.tmpl
+$ >>
+[plugins.cri.registry.mirrors]
+  [plugins.cri.registry.mirrors."docker.io"]
+    endpoint = ["https://docker.mirrors.ustc.edu.cn"]
+$ systemctl restart k3s
+$ crictl info
 ```
 
 # helm3
