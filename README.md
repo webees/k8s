@@ -34,20 +34,6 @@ $ ./get_helm.sh
 $ helm version
 ```
 
-- gitlab
-
-```
-$ k3s kubectl create namespace dev
-$ helm repo add gitlab https://charts.gitlab.io
-$ helm repo update
-$ helm install gitlab gitlab/gitlab \
-  --namespace dev \
-  --set global.edition=ce \
-  --set global.hosts.domain=git.com \
-  --set global.hosts.https=false \
-  --set global.hosts.registry.name=reg.git.com
-```
-
 # rancher
 
 ```shell
@@ -67,6 +53,23 @@ $ helm install rancher rancher-stable/rancher \
 $ helm ls --namespace cattle-system
 $ kubectl -n cattle-system rollout status deploy/rancher
 $ kubectl -n cattle-system get deploy rancher
+```
+
+# gitlab
+
+```
+$ k3s kubectl create namespace dev
+$ helm repo add gitlab https://charts.gitlab.io
+$ helm repo update
+$ helm install gitlab gitlab/gitlab \
+  --namespace dev \
+  --set global.edition=ce \
+  --set certmanager.install=false \
+  --set global.ingress.configureCertmanager=false \
+  --set global.hosts.domain=git.com \
+  --set global.hosts.https=false \
+  --set global.hosts.registry.name=reg.git.com \
+  --set gitlab-runner.install=false
 ```
 
 # FIX
