@@ -46,7 +46,7 @@ $ helm version
 2$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 $ helm repo update
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-$ k3s kubectl create namespace cattle-system
+$ k3s kubectl create ns cattle-system
 $ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=cacerts.pem
 $ helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
@@ -59,10 +59,20 @@ $ k3s kubectl -n cattle-system rollout status deploy/rancher
 $ k3s kubectl -n cattle-system get deploy rancher
 ```
 
+# traefik
+
+```shell
+$ k3s kubectl create ns traefik
+$ helm repo add traefik https://containous.github.io/traefik-helm-chart
+$ helm repo update
+$ helm install traefik traefik/traefik \
+  --namespace traefik
+```
+
 # gitlab
 
 ```
-$ k3s kubectl create namespace dev
+$ k3s kubectl create ns dev
 $ helm repo add gitlab https://charts.gitlab.io
 $ helm repo update
 $ helm install gitlab gitlab/gitlab \
