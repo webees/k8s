@@ -39,6 +39,7 @@ $ helm version
 ```
 $ k3s kubectl create namespace dev
 $ helm repo add gitlab https://charts.gitlab.io
+$ helm repo update
 $ helm install gitlab gitlab/gitlab \
   --namespace dev \
   --set global.edition=ce \
@@ -52,6 +53,7 @@ $ helm install gitlab gitlab/gitlab \
 ```shell
 $ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 $ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
+$ helm repo update
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ k3s kubectl create namespace cattle-system
 $ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=cacerts.pem
