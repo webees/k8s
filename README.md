@@ -1,6 +1,23 @@
 # k3s
 
 ```shell
+/usr/local/bin/k3s-uninstall.sh
+mkdir -p /var/lib/rancher/k3s/server/manifests
+cat << EOF > /var/lib/rancher/k3s/server/manifests/traefik.yml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  chart: traefik/traefik
+  repo: https://containous.github.io/traefik-helm-chart
+  set:
+    image.tag: "2.2.1"
+    ports.web.port: 80
+    ports.websecure.port: 443    
+EOF
+
 1$ curl -sfL https://get.k3s.io | sh -s - server \
    --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
@@ -9,27 +26,20 @@
    --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
 
-$ systemctl status k3s
-$ k3s kubectl get nodes
-$ k3s kubectl get pods -A
-$ k3s kubectl get svc -A
-$ crictl ps
-```
-
-- mirrors
-
-```shell
-$ cd /var/lib/rancher/k3s/agent/etc/containerd
-$ cp config.toml config.toml.tmpl
-```
-```toml
+cd /var/lib/rancher/k3s/agent/etc/containerd
+cp config.toml config.toml.tmpl
+cat >>/var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl<<EOF
 [plugins.cri.registry.mirrors]
   [plugins.cri.registry.mirrors."docker.io"]
     endpoint = ["https://docker.mirrors.ustc.edu.cn"]
-```
-```shell
-$ systemctl restart k3s
-$ crictl info
+EOF
+systemctl restart k3s
+systemctl status k3s
+k3s kubectl get nodes
+k3s kubectl get pods -A
+k3s kubectl get svc -A
+crictl ps
+crictl info
 ```
 
 # helm3
@@ -114,7 +124,7 @@ $ k3s kubectl get namespace "cattle-system" -o json \
 # [SKIP]kubectl
 
 ```shell
-$ cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+$ cat << EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
