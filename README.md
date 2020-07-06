@@ -25,8 +25,6 @@ $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/s
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 $ helm version
-$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
-$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 ```
 
 - gitlab
@@ -45,6 +43,8 @@ $ helm install gitlab gitlab/gitlab \
 # rancher
 
 ```shell
+$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ k3s kubectl create namespace cattle-system
 $ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=cacerts.pem
