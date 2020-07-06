@@ -11,12 +11,10 @@ metadata:
   name: traefik
   namespace: kube-system
 spec:
-  chart: traefik/traefik
+  chart: traefik
   repo: https://containous.github.io/traefik-helm-chart
   set:
-    image.tag: "2.2.1"
-    ports.web.port: 80
-    ports.websecure.port: 443    
+    image.tag: "2.2.1"  
 EOF
 
 1$ curl -sfL https://get.k3s.io | sh -s - server \
@@ -61,18 +59,20 @@ $ helm version
 
 2$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 
-$ helm repo update
-$ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-$ k3s kubectl create ns cattle-system
-$ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=/etc/rancher/cacerts.pem
-$ helm install rancher rancher-stable/rancher \
+helm repo update
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+k3s kubectl create ns cattle-system
+k3s kubectl -n cattle-system create secret generic tls-ca --from-file=/etc/rancher/cacerts.pem
+
+helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
   --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret \
   --set tls=external \
   --set privateCA=true
-$ k3s kubectl -n cattle-system rollout status deploy/rancher
-$ k3s kubectl -n cattle-system get deploy rancher
+
+k3s kubectl -n cattle-system rollout status deploy/rancher
+k3s kubectl -n cattle-system get deploy rancher
 ```
 
 # traefik
