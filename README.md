@@ -1,7 +1,9 @@
 # k3s
 
 ```shell
-$ curl -sfL https://get.k3s.io | sh -s - server \
+1$ curl -sfL https://get.k3s.io | sh -s - server \
+  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
+2$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
   --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
 $ systemctl status k3s
 $ k3s kubectl get nodes
@@ -11,11 +13,6 @@ $ crictl ps
 ```
 
 - mirrors
-
-```shell
-$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
-  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
-```
 
 ```shell
 $ cd /var/lib/rancher/k3s/agent/etc/containerd
@@ -43,8 +40,8 @@ $ helm version
 # rancher
 
 ```shell
-$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
-$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
+1$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+2$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 $ helm repo update
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ k3s kubectl create namespace cattle-system
