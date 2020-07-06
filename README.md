@@ -2,8 +2,10 @@
 
 ```shell
 1$ curl -sfL https://get.k3s.io | sh -s - server \
+   --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
 2$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
+   --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
 $ systemctl status k3s
 $ k3s kubectl get nodes
@@ -53,9 +55,8 @@ $ helm install rancher rancher-stable/rancher \
   --set ingress.tls.source=secret \
   --set tls=external \
   --set privateCA=true
-$ helm ls --namespace cattle-system
-$ kubectl -n cattle-system rollout status deploy/rancher
-$ kubectl -n cattle-system get deploy rancher
+$ k3s kubectl -n cattle-system rollout status deploy/rancher
+$ k3s kubectl -n cattle-system get deploy rancher
 ```
 
 # gitlab
