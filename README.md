@@ -1,7 +1,8 @@
 # k3s
 
 ```shell
-$ curl -sfL https://get.k3s.io | sh -s - server --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
+$ curl -sfL https://get.k3s.io | sh -s - server \
+  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
 $ systemctl status k3s
 $ k3s kubectl get nodes
 $ k3s kubectl get pods -A
@@ -10,6 +11,11 @@ $ crictl ps
 ```
 
 - mirrors
+
+```shell
+$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
+  --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
+```
 
 ```shell
 $ cd /var/lib/rancher/k3s/agent/etc/containerd
