@@ -1,8 +1,9 @@
 # k3s
 
-```shell
+```shell {.line-numbers}
 /usr/local/bin/k3s-uninstall.sh
 mkdir -p /var/lib/rancher/k3s/server/manifests
+
 cat << EOF > /var/lib/rancher/k3s/server/manifests/traefik.yml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -28,11 +29,13 @@ EOF
 
 cd /var/lib/rancher/k3s/agent/etc/containerd
 cp config.toml config.toml.tmpl
+
 cat >>/var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl<<EOF
 [plugins.cri.registry.mirrors]
   [plugins.cri.registry.mirrors."docker.io"]
     endpoint = ["https://docker.mirrors.ustc.edu.cn"]
 EOF
+
 systemctl restart k3s
 systemctl status k3s
 k3s kubectl get nodes
