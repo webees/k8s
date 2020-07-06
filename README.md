@@ -2,18 +2,25 @@
 
 ```shell
 $ curl -sfL https://get.k3s.io | sh -s - server --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
-
 $ systemctl status k3s
 $ k3s kubectl get nodes
 $ k3s kubectl get pods -A
 $ k3s kubectl get svc -A
 $ crictl ps
+```
+
+- mirrors
+
+```shell
 $ cd /var/lib/rancher/k3s/agent/etc/containerd
 $ cp config.toml config.toml.tmpl
-$ >>
+```
+```toml
 [plugins.cri.registry.mirrors]
   [plugins.cri.registry.mirrors."docker.io"]
     endpoint = ["https://docker.mirrors.ustc.edu.cn"]
+```
+```shell
 $ systemctl restart k3s
 $ crictl info
 ```
