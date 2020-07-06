@@ -4,9 +4,11 @@
 1$ curl -sfL https://get.k3s.io | sh -s - server \
    --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
+
 2$ curl -sfL https://docs.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -s - server \
    --disable traefik \
    --datastore-endpoint="mysql://username:password@tcp(hostname:3306)/database"
+
 $ systemctl status k3s
 $ k3s kubectl get nodes
 $ k3s kubectl get pods -A
@@ -43,14 +45,15 @@ $ helm version
 
 ```shell
 1$ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+
 2$ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
+
 $ helm repo update
 $ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 $ k3s kubectl create ns cattle-system
-$ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=cacerts.pem
+$ k3s kubectl -n cattle-system create secret generic tls-ca --from-file=/etc/rancher/cacerts.pem
 $ helm install rancher rancher-stable/rancher \
   --namespace cattle-system \
-  --set replicas=1 \
   --set hostname=rancher.dev.run \
   --set ingress.tls.source=secret \
   --set tls=external \
