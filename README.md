@@ -29,6 +29,19 @@ $ helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 $ helm repo add rancher-stable http://rancher-mirror.oss-cn-beijing.aliyuncs.com/server-charts/stable
 ```
 
+- gitlab
+
+```
+$ k3s kubectl create namespace dev
+$ helm repo add gitlab https://charts.gitlab.io
+$ helm install gitlab gitlab/gitlab \
+  --namespace dev \
+  --set global.edition=ce \
+  --set global.hosts.domain=git.com \
+  --set global.hosts.https=false \
+  --set global.hosts.registry.name=reg.git.com
+```
+
 # rancher
 
 ```shell
